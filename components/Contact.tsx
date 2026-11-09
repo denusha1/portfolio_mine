@@ -1,0 +1,244 @@
+"use client";
+
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Check } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+import { GithubIcon, LinkedinIcon } from "./SocialIcons";
+import type { Profile } from "@/lib/content";
+
+type Status = "idle" | "sending" | "sent" | "error";
+
+export default function Contact({ personalInfo }: { personalInfo: Profile }) {
+  const reduced = useReducedMotion();
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (status === "sending") return;
+    setErrorMessage("");
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const result = await res.json().catch(() => null);
+        throw new Error(result?.error || "Message could not be sent.");
+      }
+      setForm({ name: "", email: "", message: "", website: "" });
+      setStatus("sent");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Message could not be sent.");
+      setStatus("error");
+    }
+  };
+
+  const channels = [
+    { label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}`, Icon: null },
+    {
+      label: "Phone",
+      value: personalInfo.phone,
+      href: `tel:${personalInfo.phone.replace(/\s/g, "")}`,
+      Icon: null,
+    },
+    {
+      label: "GitHub",
+      value: personalInfo.github.replace(/^https?:\/\//, ""),
+      href: personalInfo.github,
+      Icon: GithubIcon,
+    },
+    {
+      label: "LinkedIn",
+      value: personalInfo.linkedin.replace(/^https?:\/\//, ""),
+      href: personalInfo.linkedin,
+      Icon: LinkedinIcon,
+    },
+  ];
+
+  return (
+    <section
+      id="contact"
+      className="section"
+      style={
+        {
+          background: "var(--bg-subtle)",
+          "--section-accent": "var(--c-rose)",
+        } as React.CSSProperties
+      }
+    >
+      <div className="wrap">
+        <SectionHeading
+          index="07"
+          eyebrow="Contact"
+          title="Let’s build something together."
+          description="I'm looking for a software engineering internship. If you have a role, a question, or a project worth building — email is the fastest way to reach me."
+        />
+
+        <div className="contact-editorial-grid responsive-split">
+          <Reveal>
+            <dl className="border-t" style={{ borderColor: "var(--border)" }}>
+              {channels.map(({ label, value, href, Icon }, i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.4, delay: i * 0.07 }}
+                  className="row flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b py-4"
+                  style={{ borderColor: "var(--border)" }}
+                >
+                  <dt className="eyebrow flex items-center gap-2">
+                    {Icon && <Icon size={13} />}
+                    {label}
+                  </dt>
+                  <dd className="min-w-0 max-w-full">
+                    <a
+                      href={href}
+                      target={href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      className="link-underline inline-flex items-center gap-1 text-sm"
+                    >
+                      <span className="min-w-0 [overflow-wrap:anywhere]">{value}</span>
+                      <ArrowUpRight size={13} className="shrink-0" />
+                    </a>
+                  </dd>
+                </motion.div>
+              ))}
+            </dl>
+
+            <p className="mt-6 text-sm" style={{ color: "var(--text-3)" }}>
+              Based in {personalInfo.location}. Open to remote and on-site roles.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.08}>
+            <div className="contact-postcard">
+            <div className="postcard-heading"><div><p className="eyebrow">A postcard to</p><h3>{personalInfo.shortName}</h3><span>{personalInfo.location} · A little hello goes a long way.</span></div><span className="postcard-stamp" aria-hidden="true">✳<small>HELLO<br />FROM YOU</small></span></div>
+            {status === "sent" ? (
+              <div className="postcard-success flex flex-col items-start gap-3" role="status">
+                <motion.span
+                  initial={{ scale: reduced ? 1 : 1.8, rotate: reduced ? 0 : -22, opacity: 0 }}
+                  animate={{ scale: 1, rotate: -10, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 18 }}
+                  className="postcard-sent-stamp"
+                  style={{ background: "var(--accent-soft)", color: "var(--accent)" }}
+                >
+                  <Check size={20} /> SENT WITH A HELLO
+                </motion.span>
+                <h3 className="h3">Message sent</h3>
+                <p className="text-sm" style={{ color: "var(--text-2)" }}>
+                  Thanks for reaching out — I&apos;ll reply to your email address.
+                </p>
+                <button type="button" className="btn btn-ghost btn-sm mt-2" onClick={() => setStatus("idle")}>
+                  Send another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={onSubmit} className="space-y-5" aria-busy={status === "sending"}>
+                <fieldset disabled={status === "sending"} className="space-y-5">
+                <div hidden aria-hidden="true"><label htmlFor="contact-website">Leave this field empty</label><input id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={onChange} /></div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label className="label" htmlFor="name">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      value={form.name}
+                      onChange={onChange}
+                      required
+                      maxLength={120}
+                      autoComplete="name"
+                      className="field"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="label" htmlFor="email">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={onChange}
+                      required
+                      maxLength={254}
+                      autoComplete="email"
+                      className="field"
+                      placeholder="you@company.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="label" htmlFor="message">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={form.message}
+                    onChange={onChange}
+                    required
+                    rows={5}
+                    maxLength={5000}
+                    className="field resize-y"
+                    placeholder="What would you like to talk about?"
+                  />
+                </div>
+
+                {status === "error" && (
+                  <p role="alert" className="text-sm" style={{ color: "var(--c-rose)" }}>
+                    {errorMessage} You can also email me directly at{" "}
+                    <a className="link-underline" href={`mailto:${personalInfo.email}`}>
+                      {personalInfo.email}
+                    </a>
+                    .
+                  </p>
+                )}
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <motion.button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={status === "sending"}
+                    whileHover={status === "sending" ? undefined : { y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
+                    {status === "sending" && (
+                      <motion.span
+                        className="h-3.5 w-3.5 rounded-full border-2 border-current border-t-transparent"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 0.7, repeat: Infinity, ease: "linear" }}
+                        aria-hidden
+                      />
+                    )}
+                    {status === "sending" ? "Sending…" : "Send this postcard ↗"}
+                  </motion.button>
+                </div>
+                </fieldset>
+              </form>
+            )}
+            <p className="postcard-footnote">Good conversations start with a simple hello.</p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}

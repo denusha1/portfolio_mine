@@ -1,0 +1,304 @@
+[
+  {
+    "id": "pms",
+    "title": "Performance Management System",
+    "context": "Team project · Full stack",
+    "team": true,
+    "featured": true,
+    "summary": "A centralised platform for running employee performance evaluations through a multi-level organisational workflow. Each level reviews the level below it, and every evaluation moves through an approval chain before it counts.",
+    "detail": [
+      "Built the evaluation and approval workflow end to end — team management, employee evaluation, review, approval, rejection and status tracking.",
+      "Implemented the My Team view, with employee search, evaluation-status filtering and status-wise employee counts.",
+      "Built the evaluation interfaces covering performance objectives, targets, achievements, ratings, overall scores and feedback.",
+      "Implemented the multi-level approval and rejection flows, including reason and comment handling and the status updates that follow from them.",
+      "Developed the Enquiry and Notification modules for evaluation disputes and workflow updates.",
+      "Integrated the frontend with Flask REST APIs and Supabase PostgreSQL, with role-based access following the organisational hierarchy."
+    ],
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Python Flask",
+      "REST API",
+      "Supabase PostgreSQL",
+      "Azure AD SSO",
+      "LLM APIs"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "Employee evaluations need to move through several levels of an organisation. Reviewers need to find their team, understand each evaluation’s status and record approvals or rejections with the relevant feedback.",
+      "approach": "The project brings employee evaluations, team views, approval status, enquiries and notifications into a single platform. My work connected the evaluation and review screens to Flask REST APIs and Supabase PostgreSQL.",
+      "architecture": [
+        "Next.js / React — team views and evaluation screens",
+        "Flask REST APIs — evaluation and approval operations",
+        "Supabase PostgreSQL — persistent application data"
+      ],
+      "decisions": "The evaluation flow uses explicit review, approval and rejection states. Team views combine status filters and counts, while role-based access follows the organisational hierarchy. The interface connects to Flask REST APIs backed by Supabase PostgreSQL.",
+      "lessons": "",
+      "outcome": "The implemented workflow supports team lookup, evaluation entry, review, approval and rejection with feedback and status tracking. Enquiry and notification modules handle disputes and workflow updates."
+    }
+  },
+  {
+    "id": "blogapp",
+    "title": "BlogApp",
+    "context": "Team project · Full stack",
+    "team": true,
+    "featured": false,
+    "summary": "A blogging platform with dynamic post management, a Markdown editor that previews as you type, search across published posts, and profile administration.",
+    "detail": [
+      "Built the authentication engine: secure login and session management with role-based access.",
+      "Developed the Markdown editor, with live preview, formatting controls and draft saving.",
+      "Implemented the full post CRUD lifecycle — creation, inline editing and deletion behind confirmation modals.",
+      "Engineered post discovery with real-time text search and detailed post views.",
+      "Designed a personalised profile dashboard showing activity metrics and post management controls."
+    ],
+    "stack": [
+      "Next.js",
+      "React",
+      "Node.js",
+      "REST APIs",
+      "Markdown parser",
+      "Tailwind CSS"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "A blogging platform needs to support the complete writing journey: signing in, drafting content, previewing formatting, publishing and finding posts again.",
+      "approach": "The project combines authentication and role-based access with a Markdown editing experience, post management, search and a personal profile dashboard.",
+      "architecture": [
+        "Next.js / React — editor, posts and profile dashboard",
+        "Node.js / REST APIs — application services",
+        "Markdown parser — formatted content preview"
+      ],
+      "decisions": "Writing and formatting are connected through a Markdown editor with live preview and draft saving. Authentication and role-based access guard post management, and confirmation dialogs precede deletion.",
+      "lessons": "",
+      "outcome": "The implementation covers authentication, drafting, live preview, post creation and editing, deletion, search and a personal profile dashboard."
+    }
+  },
+  {
+    "id": "waytohome",
+    "title": "WayToHome",
+    "context": "Bus booking · Full stack",
+    "team": false,
+    "featured": false,
+    "summary": "A full-stack bus booking platform where passengers can search trips, choose seats, pay, and receive tickets. Operators can manage routes, trips, and bookings from an admin dashboard.",
+    "detail": [
+      "Built responsive user interfaces for trip search, seat selection, booking, payment, and ticket generation.",
+      "Developed a modular NestJS backend with route management, booking logic, payment processing, authentication, and admin operations.",
+      "Integrated Supabase authentication with server-side JWT verification, role-based access, and validation for passenger and admin workflows.",
+      "Added live seat availability updates with Socket.IO so passengers see seats become unavailable as bookings change.",
+      "Designed PostgreSQL data models and transactional booking logic, with Prisma migrations to protect reservation integrity.",
+      "Created an admin dashboard for managing trips, viewing bookings, and monitoring operations.",
+      "Implemented QR-based electronic tickets and booking status tracking.",
+      "Prepared the application for containerized deployment with Docker and environment-based configuration for cloud hosting."
+    ],
+    "stack": [
+      "Next.js",
+      "NestJS",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Supabase Auth",
+      "Socket.IO",
+      "Docker",
+      "CI/CD",
+      "AWS / Cloud deployment"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "Booking a bus trip involves several connected steps: finding a suitable trip, choosing an available seat, paying, and receiving a ticket. Operators also need a way to manage trips and review bookings.",
+      "approach": "WayToHome brings passenger booking and operator tasks into one full-stack platform. A Next.js interface connects to a NestJS API, with PostgreSQL and Prisma handling persistent booking data.",
+      "architecture": [
+        "Next.js — responsive passenger booking flow and admin dashboard",
+        "NestJS — route, booking, payment, authentication, and admin APIs",
+        "Prisma and PostgreSQL — data models, migrations, and reservation transactions",
+        "Supabase Auth and JWT verification — identity and protected user or admin actions",
+        "Socket.IO — live seat availability updates",
+        "Docker and CI/CD configuration — repeatable deployment setup"
+      ],
+      "decisions": "Booking writes use database transactions to keep reservations consistent. The server verifies JWTs, checks the user's role, and validates requests before protected operations. Seat availability is sent over Socket.IO so the selection screen can reflect booking changes while passengers are choosing.",
+      "lessons": "The booking flow depends on several parts agreeing about the same reservation. Transactional writes, server-side checks, and live seat updates help keep the passenger interface aligned with the stored booking state.",
+      "outcome": "The platform covers trip search through ticket generation, gives operators trip and booking visibility, and includes QR-based tickets and booking status tracking. The application is prepared for containerized cloud deployment."
+    }
+  },
+  {
+    "id": "queuesense",
+    "title": "QueueSense",
+    "context": "Clinic queues · Full stack and analytics",
+    "team": false,
+    "featured": false,
+    "summary": "A clinic queue platform for patient check-in, appointments, and clinician workflows. It also estimates waiting times and provides operational reports using synthetic healthcare data.",
+    "detail": [
+      "Built patient check-in, appointment booking, clinician workflows, and private queue views using synthetic clinic operations data.",
+      "Implemented role-based workspaces, QR self-check-in, and live queue updates with Server-Sent Events.",
+      "Added operational analytics, PDF and CSV reports, and staffing simulations.",
+      "Developed explainable waiting-time predictions with Random Forest and SHAP. On a synthetic test set, the model achieved a 7.10-minute mean absolute error, compared with 9.62 minutes for the baseline.",
+      "Built PostgreSQL-backed workflows with secure session authentication and audit logging.",
+      "Added automated database, API, and browser tests, and configured Docker Compose and LAN access for deployment."
+    ],
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "scikit-learn",
+      "SHAP",
+      "Server-Sent Events",
+      "Docker Compose",
+      "GitHub Actions",
+      "Pytest",
+      "Playwright"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "Clinics need to coordinate check-ins, appointments, and clinician work while giving patients a private way to understand their place in the queue. Operational teams also need visibility into waiting times and staffing scenarios.",
+      "approach": "QueueSense combines patient and clinician workflows with live queue updates and reporting. Waiting-time estimates use a Random Forest model trained and evaluated on synthetic healthcare operations data; SHAP is used to explain which inputs influence a prediction.",
+      "architecture": [
+        "Next.js / React — patient check-in, appointment, clinician, and operations views",
+        "FastAPI / Python — queue, analytics, reporting, and prediction endpoints",
+        "PostgreSQL — appointments, queue records, and audit events",
+        "Server-Sent Events — live queue updates to connected clients",
+        "scikit-learn and SHAP — waiting-time model and prediction explanations",
+        "Docker Compose, GitHub Actions, Pytest, and Playwright — local services, CI, and automated checks"
+      ],
+      "decisions": "The prediction result is presented with an explanation, rather than as an unexplained number. Evaluation uses a synthetic test set and is clearly separated from real clinical performance. Server-Sent Events deliver queue changes to clients without requiring repeated page refreshes.",
+      "lessons": "A useful wait-time estimate needs context as well as a score. Comparing against a baseline and exposing contributing factors makes the model easier to inspect, while the synthetic data means the measured accuracy should not be treated as evidence of real-world clinical performance.",
+      "outcome": "The synthetic test set produced a 7.10-minute mean absolute error for the Random Forest model, compared with 9.62 minutes for the baseline. The platform also includes patient and clinician workflows, live queue updates, reports, staffing simulations, audit logging, and automated tests."
+    }
+  },
+  {
+    "id": "retailpulse",
+    "title": "RetailPulse",
+    "context": "Retail analytics · Full stack",
+    "team": false,
+    "featured": false,
+    "summary": "A retail dashboard for exploring sales, products, branches, and inventory. It includes secure branch-based access, data imports, downloadable reports, and exploratory forecasting tools.",
+    "detail": [
+      "Built a Python REST API and interactive dashboard with filters for sales, product, branch, and inventory insights, plus CSV and PDF reports.",
+      "Implemented Supabase authentication with JWT verification, role- and branch-based permissions, PostgreSQL Row-Level Security, and encrypted session cookies.",
+      "Added validated CSV imports with row-level error reporting, timestamped backups, and a guarded dataset restore workflow.",
+      "Developed exploratory revenue forecasts, sales anomaly alerts, pricing scenarios, and inventory estimates. Documented their assumptions and limitations as heuristics rather than validated predictions.",
+      "Split the backend into routing, analytics, and data-access components, and containerized it with Docker.",
+      "Added CI and 63 automated tests, and verified the container image with a health-check smoke test."
+    ],
+    "stack": [
+      "Python 3.11",
+      "HTML",
+      "CSS",
+      "Vanilla JavaScript",
+      "pandas",
+      "NumPy",
+      "REST APIs",
+      "Supabase Auth",
+      "PostgreSQL / RLS",
+      "SQLAlchemy",
+      "MySQL",
+      "Docker",
+      "Render",
+      "GitHub Actions"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "Retail teams need to compare sales, products, branches, and inventory while keeping each user's access scoped to their role and branch. They also need safe ways to import, report on, and restore datasets.",
+      "approach": "RetailPulse pairs an interactive dashboard with a modular Python REST API. Supabase authentication and PostgreSQL Row-Level Security protect access, while validated imports, backups, and a guarded restore flow support dataset operations.",
+      "architecture": [
+        "HTML, CSS, and vanilla JavaScript — interactive analytics dashboard",
+        "Python REST API — routing, analytics, and data-access modules",
+        "PostgreSQL / Supabase Auth — stored data, identity, and row-level access policies",
+        "pandas and NumPy — data processing and exploratory analysis",
+        "Docker and Render — containerized application deployment",
+        "GitHub Actions — continuous integration and automated checks"
+      ],
+      "decisions": "Access is checked at the role and branch level in the application and reinforced with PostgreSQL Row-Level Security. CSV rows are validated with errors reported by row. Forecasting, anomaly, pricing, and inventory features are documented as exploratory heuristics, not validated predictions.",
+      "lessons": "Analytics interfaces should make the limits of a calculation clear. Separating exploratory heuristics from validated predictions helps users interpret forecasts and scenarios appropriately. Import validation and a guarded restore flow also make dataset changes easier to review.",
+      "outcome": "The dashboard supports filtered sales, product, branch, and inventory views with CSV and PDF exports. The application includes access controls, import validation, backups, restore safeguards, exploratory analysis, CI, 63 automated tests, and a Docker image health-check smoke test."
+    }
+  },
+  {
+    "id": "ink-and-ideas",
+    "title": "Ink & Ideas",
+    "context": "Personal project · Full stack",
+    "team": false,
+    "featured": false,
+    "summary": "A blogging platform for writing and scheduling articles, finding stories, and building an audience, with separate dashboards for authors and administrators.",
+    "detail": [
+      "Built a responsive blogging platform with Next.js, React, and TypeScript, backed by a Java and Spring Boot API and PostgreSQL.",
+      "Implemented article creation and scheduling, a Markdown editor, search and category filters, bookmarks, reading history, comments, reactions, author follows, and notifications.",
+      "Developed author analytics and admin dashboards for readership tracking, user management, article review, and reported-content moderation.",
+      "Prepared Docker Compose deployment with persistent PostgreSQL storage, API health checks, environment-based secrets, and a server-side API proxy."
+    ],
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Java 21",
+      "Spring Boot",
+      "Spring Security",
+      "JWT",
+      "BCrypt",
+      "Spring Data JPA",
+      "Hibernate",
+      "PostgreSQL",
+      "Recharts",
+      "Cloudinary",
+      "Docker",
+      "Docker Compose"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "A publishing platform needs to support more than writing and reading. Authors need tools to create and schedule work and understand readership, while administrators need ways to review content and respond to reports.",
+      "approach": "Ink & Ideas uses a Next.js and TypeScript frontend with a Java and Spring Boot backend. It combines article publishing and reader interactions with author analytics and administrator moderation tools.",
+      "architecture": [
+        "Next.js / React / TypeScript — responsive reader, writing, and dashboard interfaces",
+        "Java 21 / Spring Boot — application API and publishing workflows",
+        "Spring Security, JWT, and BCrypt — protected sessions and password security",
+        "Spring Data JPA / Hibernate / PostgreSQL — persistence and relational data access",
+        "Recharts and Cloudinary — dashboard visualizations and media handling",
+        "Docker Compose — application services with persistent PostgreSQL storage"
+      ],
+      "decisions": "The application separates the Next.js interface from the Spring Boot API and routes frontend API requests through a server-side proxy. Spring Security, JWT, and BCrypt support authenticated workflows. Docker Compose uses persistent database storage, health checks, and environment-based secrets for deployment configuration.",
+      "lessons": "A publishing product serves different workflows: authors create and track content, readers discover and interact with it, and administrators review reports. Giving each group dedicated tools keeps those responsibilities clear while sharing the same article data.",
+      "outcome": "The platform supports article drafting and scheduling, discovery, reader interactions, author analytics, and moderation workflows. Its Docker Compose setup includes persistent PostgreSQL storage, API health checks, environment-based secrets, and a server-side API proxy."
+    }
+  },
+  {
+    "id": "cnc",
+    "title": "CNC Paper Board Cutting Machine",
+    "context": "Team project · Microcontroller",
+    "team": true,
+    "featured": false,
+    "summary": "An automated CNC machine that cuts paper board from G-code, driven by an ESP32 coordinating stepper motors, servo motors and optical sensors.",
+    "detail": [
+      "Implemented the LCD operator interface and the servo motor control for machine operation.",
+      "Integrated and synchronised the paper feeding mechanism with the cutting process.",
+      "Designed the machine's 3D components in Blender."
+    ],
+    "stack": [
+      "ESP32",
+      "CNC Shield",
+      "NEMA 17",
+      "DRV8825",
+      "TCRT5000",
+      "GRBL",
+      "Inkscape",
+      "Blender"
+    ],
+    "media": [],
+    "caseStudy": {
+      "problem": "Automated paper-board cutting requires the material feed and cutting mechanism to operate together, with an interface that lets an operator control the machine.",
+      "approach": "The machine uses an ESP32 with motors and optical sensors to execute G-code-driven cutting. My work covered the LCD operator interface, servo control, paper-feed synchronisation and 3D component design in Blender.",
+      "architecture": [
+        "G-code — cutting instructions",
+        "ESP32 / GRBL — machine control",
+        "Motor drivers, motors and optical sensors — motion and sensing",
+        "LCD interface — operator interaction"
+      ],
+      "decisions": "The system uses ESP32 / GRBL for G-code-driven control with motors and optical sensors. My implementation connects the LCD operator interface and servo control with synchronised paper feeding and cutting.",
+      "lessons": "",
+      "outcome": "My delivered work covers the LCD operator interface, servo control, paper-feed integration and Blender models for the machine’s components."
+    }
+  }
+]

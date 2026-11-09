@@ -1,0 +1,35 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
+/**
+ * A single, quiet entrance used everywhere on the page: a short fade and a
+ * short rise as the content enters the viewport. Keeping one motion vocabulary is what stops a site from
+ * feeling like a demo reel.
+ */
+export default function Reveal({
+  children,
+  delay = 0,
+  as = "div",
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  as?: "div" | "li" | "section";
+  className?: string;
+}) {
+  const Component = motion[as];
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <Component
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.08, margin: "0px" }}
+      transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </Component>
+  );
+}
