@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import ProjectVisual from "./ProjectVisual";
 import ProjectGallery from "./ProjectGallery";
@@ -38,11 +39,11 @@ const plainLanguage: Record<string, { summary: string; contribution: string }> =
   },
 };
 
-const textGroup = {
+const textGroup: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: .07, delayChildren: .12 } },
 };
-const textItem = {
+const textItem: Variants = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: .4, ease: [.22, 1, .36, 1] } },
 };
